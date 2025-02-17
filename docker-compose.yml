@@ -2,20 +2,21 @@ version: '3.8'
 
 services:
   app:
-    image: php:8.2-apache
-    container_name: data_modeler_app
+    build: .
+    container_name: codeigniter_app
     restart: always
     ports:
       - "${APP_PORT}:80"
     volumes:
       - .:/var/www/html
-    working_dir: /var/www/html
     networks:
       - codeigniter-network
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo:latest
-    container_name: data_modeler_db
+    container_name: codeigniter_mongo
     restart: always
     ports:
       - "${DB_PORT}:27017"
